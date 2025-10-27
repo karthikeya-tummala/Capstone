@@ -1,4 +1,4 @@
-import { uploadToS3 } from "../../utils/uploadToS3";
+import { uploadToS3 } from "../../utils/uploadToS3.js";
 
 const UploadImage = async (req, res) => {
     try {
@@ -32,3 +32,5 @@ const UploadImage = async (req, res) => {
         })
     }
 }
+
+export { UploadImage }

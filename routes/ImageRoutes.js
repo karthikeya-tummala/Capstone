@@ -1,6 +1,6 @@
 import express from "express";
-import { UploadImage } from "../controller/Image/index";
-import { upload } from "../middleware/multer";
+import { UploadImage } from "../controller/Image/index.js";
+import { upload } from "../middleware/multer.js";
 
 const imageRouter = express.Router();
 

@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
-import { imageRouter } from "./ImageRoutes";
+import { imageRouter } from "./ImageRoutes.js";
 
 router.use("/", imageRouter);
 
-export { router };
+export { router as routes };

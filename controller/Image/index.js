@@ -1,4 +1,4 @@
-import UploadImage from "./UploadImage"
+import { UploadImage } from "./UploadImage.js"
 
 
 export {

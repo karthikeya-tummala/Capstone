@@ -1,4 +1,4 @@
-import { S3Client } from "./S3ClientHandler.js";
+import { s3Client } from "./S3ClientHandler.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 export const uploadToS3 = async ({ fileName, fileBuffer, mimeType }) => {
@@ -7,7 +7,7 @@ export const uploadToS3 = async ({ fileName, fileBuffer, mimeType }) => {
   const folderName = "uploads/";
   const key = `${folderName}${fileName}`;
 
-  await S3Client.send(
+  await s3Client.send(
     new PutObjectCommand({
       Bucket: bucket,
       Key: key,
