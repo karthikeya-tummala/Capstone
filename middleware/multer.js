@@ -10,8 +10,9 @@ const upload = multer({
     },
     fileFilter: (req, file, cb) => {
         if (file.size > IMAGE_SIZE_LIMIT) {
-            cb(new Error('File Size should be less than 5 MB'));
+            return cb(new Error('File Size should be less than 5 MB'));
         }
+        cb(null, true);
     }
 });
 
