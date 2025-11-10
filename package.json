@@ -15,7 +15,10 @@
     "@aws-sdk/client-s3": "^3.888.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "file-converter-nodejs": "^1.0.4",
+    "file-type": "^21.1.0",
     "multer": "^2.0.2",
-    "serverless-http": "^4.0.0"
+    "serverless-http": "^4.0.0",
+    "sharp": "^0.34.5"
   }
 }

@@ -4,7 +4,7 @@ import serverless from "serverless-http";
 import dotenv from "dotenv";
 
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const app = express();
 
@@ -30,9 +30,9 @@ app.use('/health-check', (req, res) => {
   })
 })
 
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 export const handler = serverless(app);
