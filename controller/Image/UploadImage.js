@@ -22,9 +22,9 @@ const UploadImage = async (req, res) => {
             fileBuffer: file.buffer,
             mimeType: file.mimetype
         });
-
+        let convertedImage;
         try {
-            const convertedImage = await convertImage(file.buffer, fromFormat, to.toLowerCase());
+        convertedImage = await convertImage(file.buffer, fromFormat, to.toLowerCase());
         }
         catch(err) {
             console.log(err.message);

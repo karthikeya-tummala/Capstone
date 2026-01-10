@@ -2,11 +2,16 @@ import express from "express";
 import { routes } from "./routes/index.js";
 import serverless from "serverless-http";
 import dotenv from "dotenv";
+import { connectDB } from "./utils/DB.js";
 
 
 dotenv.config({ quiet: true });
 
 const app = express();
+
+app.use(express.json());
+
+await connectDB();
 
 app.use("/api/v1", routes);
 
