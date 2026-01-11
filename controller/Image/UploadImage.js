@@ -1,6 +1,7 @@
 import { uploadToS3 } from "../../utils/uploadToS3.js";
-import { convertImage } from "../../utils/convertImage.js";
 import { fileTypeFromBuffer } from "file-type";
+import { convertImage } from "../../utils/convertImage.js";
+import { File } from "../../models/index.js";
 
 const UploadImage = async (req, res) => {
     try {
@@ -17,11 +18,22 @@ const UploadImage = async (req, res) => {
         const detectedType = await fileTypeFromBuffer(file.buffer);
         const fromFormat = detectedType ? detectedType.ext : file.mimetype.split("/")[1];
 
-        const imageUrl = await uploadToS3({
+        const originalUpload = await uploadToS3({
             fileName: file.originalname,
             fileBuffer: file.buffer,
             mimeType: file.mimetype
         });
+        
+        if (req.user?.email) {
+            await File.create({
+                email: req.user.email,
+                file: {
+                    s3Key: originalUpload.key,
+                    format: fromFormat
+                }
+        });
+    }
+
         let convertedImage;
         try {
         convertedImage = await convertImage(file.buffer, fromFormat, to.toLowerCase());
@@ -43,11 +55,9 @@ const UploadImage = async (req, res) => {
         });
 
         return res.status(200).json({
-      success: true,
-      message: `File uploaded and converted successfully (${fromFormat} -> ${to.toLowerCase()})`,
-      data: {
-        newUrl: convertedUrl
-      }
+            success: true,
+            message: `File uploaded and converted successfully (${fromFormat} -> ${to.toLowerCase()})`,
+            data: convertedUrl.url
     });
 
     }
