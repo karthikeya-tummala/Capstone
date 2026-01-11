@@ -5,7 +5,7 @@ import { fileTypeFromBuffer } from "file-type";
 const UploadImage = async (req, res) => {
     try {
         const { file } = req;
-        const { to } = req.query;
+        const { to } = req.body;
         
         if (!file || !to) {
             return res.status(400).json({
