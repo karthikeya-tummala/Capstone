@@ -2,14 +2,20 @@ import sharp from "sharp";
 import { formats } from "./Constants.js";
 
 function isConversionAllowed(from, to) {
-  const rule = formats.find(f => f.from === from.toLowerCase());
-  return rule ? rule.to.includes(to.toLowerCase()) : false;
+  const rule = formats.find(f => f.from === from);
+  return rule ? rule.to.includes(to) : false;
 }
+
+const normalizeFormat = (fmt) => {
+  if (!fmt) return null;
+  return fmt.toLowerCase() === "jpg" ? "jpeg" : fmt.toLowerCase();
+};
+
 
 export async function convertImage(inputBuffer, fromFormat, toFormat, options = {}) {
 
-  const from = fromFormat.toLowerCase();
-  const to = toFormat.toLowerCase();
+  const from = normalizeFormat(fromFormat);
+  const to = normalizeFormat(toFormat);
 
   if (!isConversionAllowed(from, to)) {
     throw new Error(`Conversion from ${from} to ${to} not allowed.`);
@@ -26,7 +32,6 @@ export async function convertImage(inputBuffer, fromFormat, toFormat, options = 
     };
 
     switch (to) {
-      case "jpg":
       case "jpeg": return await img.jpeg(config).toBuffer();
       case "png":  return await img.png({ compressionLevel: 9 }).toBuffer();
       case "webp": return await img.webp(config).toBuffer();

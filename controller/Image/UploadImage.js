@@ -6,7 +6,7 @@ const UploadImage = async (req, res) => {
     try {
         const { file } = req;
         const { to } = req.body;
-        
+
         if (!file || !to) {
             return res.status(400).json({
                 success: false,
@@ -44,7 +44,7 @@ const UploadImage = async (req, res) => {
 
         return res.status(200).json({
       success: true,
-      message: `File uploaded and converted successfully (${fromFormat} → ${to.toLowerCase()})`,
+      message: `File uploaded and converted successfully (${fromFormat} -> ${to.toLowerCase()})`,
       data: {
         newUrl: convertedUrl
       }
