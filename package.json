@@ -18,6 +18,7 @@
     "express": "^5.1.0",
     "file-converter-nodejs": "^1.0.4",
     "file-type": "^21.1.0",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.2",
     "multer": "^2.0.2",
     "serverless-http": "^4.0.0",
