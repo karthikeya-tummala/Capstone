@@ -16,6 +16,9 @@ export const uploadToS3 = async ({ fileName, fileBuffer, mimeType }) => {
     })
   );
 
-  return `https://${bucket}.s3.amazonaws.com/${encodeURIComponent(key)}`;
+  return {
+    key,
+    url: `https://${bucket}.s3.amazonaws.com/${encodeURIComponent(key)}`
+  }
 };
 
