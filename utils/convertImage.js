@@ -26,6 +26,7 @@ export async function convertImage(inputBuffer, fromFormat, toFormat, options = 
     };
 
     switch (to) {
+      case "jpg":
       case "jpeg": return await img.jpeg(config).toBuffer();
       case "png":  return await img.png({ compressionLevel: 9 }).toBuffer();
       case "webp": return await img.webp(config).toBuffer();
