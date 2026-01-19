@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 export const signUp = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const SALT_ROUNDS = process.env.BCRPYT_SALT_ROUNDS;
+        const SALT_ROUNDS = Number(process.env.BCRYPT_SALT_ROUNDS);
 
         if (!name || !email || !password) {
             return res.status(400).json({
