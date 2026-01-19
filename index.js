@@ -3,11 +3,18 @@ import { routes } from "./routes/index.js";
 import serverless from "serverless-http";
 import dotenv from "dotenv";
 import { connectDB } from "./utils/DB.js";
+import cors from "cors";
 
 
 dotenv.config({ quiet: true });
 
 const app = express();
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}))
 
 app.use(express.json());
 
