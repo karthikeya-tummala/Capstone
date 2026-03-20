@@ -5,7 +5,7 @@ export const uploadToS3 = async ({ fileName, fileBuffer, mimeType }) => {
 
   const bucket = process.env.S3_BUCKET_NAME;
   const folderName = "uploads/";
-  const key = `${folderName}${fileName}`;
+  const key = `${folderName}${Date.now()}-${fileName}`;
 
   await s3Client.send(
     new PutObjectCommand({
@@ -16,9 +16,6 @@ export const uploadToS3 = async ({ fileName, fileBuffer, mimeType }) => {
     })
   );
 
-  return {
-    key,
-    url: `https://${bucket}.s3.amazonaws.com/${encodeURIComponent(key)}`
-  }
+  return {key}
 };
 

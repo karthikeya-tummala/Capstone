@@ -1,7 +1,8 @@
 import express from "express";
-const router = express.Router();
 import { imageRouter } from "./ImageRoutes.js";
 import { authRouter } from "./AuthRoutes.js";
+
+const router = express.Router();
 
 router.use("/upload", imageRouter);
 router.use("/auth", authRouter);

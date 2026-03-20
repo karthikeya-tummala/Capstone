@@ -8,7 +8,21 @@ function isConversionAllowed(from, to) {
 
 const normalizeFormat = (fmt) => {
   if (!fmt) return null;
-  return fmt.toLowerCase() === "jpg" ? "jpeg" : fmt.toLowerCase();
+
+  let lower = fmt.toLowerCase();
+
+  if (lower === "jpg") return "jpeg";
+  if (lower === "tif") return "tiff";
+
+  if (lower.startsWith("x-")) {
+    lower = lower.replace("x-", "");
+  }
+
+  if (lower.includes("+")) {
+    lower = lower.split("+")[0];  // "svg+xml" → "svg"
+  }
+
+  return lower;
 };
 
 
@@ -32,17 +46,40 @@ export async function convertImage(inputBuffer, fromFormat, toFormat, options = 
     };
 
     switch (to) {
-      case "jpeg": return await img.jpeg(config).toBuffer();
-      case "png":  return await img.png({ compressionLevel: 9 }).toBuffer();
-      case "webp": return await img.webp(config).toBuffer();
-      case "avif": return await img.avif({ quality: config.quality }).toBuffer();
-      case "heif": return await img.heif({ quality: config.quality }).toBuffer();
-      case "tiff": return await img.tiff({ quality: config.quality }).toBuffer();
+      case "jpeg":
+        return await img.jpeg({
+          quality: config.quality,
+          progressive: true,
+          chromaSubsampling: "4:4:4"
+        }).toBuffer();
+
+      case "png":
+        return await img.png({
+          compressionLevel: 9,
+          progressive: true
+        }).toBuffer();
+
+      case "webp":
+        return await img.webp({
+          quality: config.quality
+        }).toBuffer();
+
+      case "avif":
+        return await img.avif({
+          quality: config.quality
+        }).toBuffer();
+
+      case "tiff":
+        return await img.tiff({
+          quality: config.quality,
+          compression: "lzw"
+        }).toBuffer();
+
       default:
         throw new Error(`Unsupported target format: ${to}`);
     }
   } catch (err) {
     console.error("Image conversion failed:", err);
-    throw new Error(`Failed to convert ${fromFormat} → ${toFormat}`);
+    throw new Error(`Failed to convert ${fromFormat} → ${toFormat}, ${err}`);
   }
 }

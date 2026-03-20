@@ -42,6 +42,15 @@ app.use('/health-check', (req, res) => {
   })
 })
 
+app.use((err, req, res, next) => {
+  console.log("Error:", err);
+
+  return res.status(500).json({
+    success: false,
+    message: "Internal Server Error",
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

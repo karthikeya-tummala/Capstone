@@ -1,4 +1,19 @@
-node_modules
+# Dependency directories
+node_modules/
+
+# Environment variables
 .env
+
+# macOS system files
 .DS_Store
+
+# IDE folders
+.idea/
+
+# Archives
 *.zip
+frontend.zip
+review1.zip
+
+# Project directories
+frontend/
